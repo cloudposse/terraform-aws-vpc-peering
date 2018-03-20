@@ -38,7 +38,7 @@ module "vpc_peering" {
 | Name                            | Description                                       |
 |:--------------------------------|:--------------------------------------------------|
 | `connection_id`                 | VPC peering connection ID                         |
-| `accept_status`                 | The status of the VPC Peering Connection request  |
+| `accept_status`                 | The status of the VPC peering connection request  |
 
 
 
