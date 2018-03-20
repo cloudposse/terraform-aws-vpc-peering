@@ -1,0 +1,78 @@
+module "label" {
+  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.3.3"
+  enabled    = "${var.enabled}"
+  namespace  = "${var.namespace}"
+  name       = "${var.name}"
+  stage      = "${var.stage}"
+  delimiter  = "${var.delimiter}"
+  attributes = "${var.attributes}"
+  tags       = "${var.tags}"
+}
+
+resource "aws_vpc_peering_connection" "default" {
+  count       = "${var.enabled == "true" ? 1 : 0}"
+  vpc_id      = "${var.requestor_vpc_id}"
+  peer_vpc_id = "${var.acceptor_vpc_id}"
+
+  auto_accept = "${var.auto_accept}"
+
+  accepter {
+    allow_remote_vpc_dns_resolution = true
+  }
+
+  requester {
+    allow_remote_vpc_dns_resolution = true
+  }
+
+  tags = "${module.label.tags}"
+}
+
+# Lookup requestor VPC so that we can reference the CIDR
+data "aws_vpc" "requestor" {
+  count = "${var.enabled == "true" ? 1 : 0}"
+  id    = "${var.requestor_vpc_id}"
+}
+
+# Lookup requestor subnets
+data "aws_subnet_ids" "requestor" {
+  vpc_id = "${var.requestor_vpc_id}"
+}
+
+# Lookup requestor route tables
+data "aws_route_table" "requestor" {
+  count     = "${var.enabled == "true" ? length(distinct(sort(data.aws_subnet_ids.requestor.ids))) : 0}"
+  subnet_id = "${element(distinct(sort(data.aws_subnet_ids.requestor.ids)), count.index)}"
+}
+
+# Lookup acceptor VPC so that we can reference the CIDR
+data "aws_vpc" "acceptor" {
+  count = "${var.enabled == "true" ? 1 : 0}"
+  id    = "${var.acceptor_vpc_id}"
+}
+
+# Lookup acceptor subnets
+data "aws_subnet_ids" "acceptor" {
+  vpc_id = "${var.acceptor_vpc_id}"
+}
+
+# Lookup acceptor route tables
+data "aws_route_table" "acceptor" {
+  count     = "${var.enabled == "true" ? length(distinct(sort(data.aws_subnet_ids.acceptor.ids))) : 0}"
+  subnet_id = "${element(distinct(sort(data.aws_subnet_ids.acceptor.ids)), count.index)}"
+}
+
+# Create a route from requestor to acceptor
+resource "aws_route" "requestor" {
+  count                     = "${var.enabled == "true" ? length(distinct(sort(data.aws_route_table.requestor.*.route_table_id))) : 0}"
+  route_table_id            = "${element(distinct(sort(data.aws_route_table.requestor.*.route_table_id)), count.index)}"
+  destination_cidr_block    = "${data.aws_vpc.acceptor.cidr_block}"
+  vpc_peering_connection_id = "${aws_vpc_peering_connection.default.id}"
+}
+
+# Create a route from acceptor to requestor
+resource "aws_route" "acceptor" {
+  count                     = "${var.enabled == "true" ? length(distinct(sort(data.aws_route_table.acceptor.*.route_table_id))) : 0}"
+  route_table_id            = "${element(distinct(sort(data.aws_route_table.acceptor.*.route_table_id)), count.index)}"
+  destination_cidr_block    = "${data.aws_vpc.requestor.cidr_block}"
+  vpc_peering_connection_id = "${aws_vpc_peering_connection.default.id}"
+}
