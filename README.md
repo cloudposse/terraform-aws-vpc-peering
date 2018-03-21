@@ -45,7 +45,7 @@ module "vpc_peering" {
 
 Thanks to [Gladly.com](https://www.gladly.com/) for the inspiration with this wonderful module:
 
-https://github.com/sagansystems/terraform-aws-vpc-peering
+https://github.com/sagansystems/terraform-aws-vpc-kops-peering
 
 
 ## Help
