@@ -17,11 +17,11 @@ resource "aws_vpc_peering_connection" "default" {
   auto_accept = "${var.auto_accept}"
 
   accepter {
-    allow_remote_vpc_dns_resolution = true
+    allow_remote_vpc_dns_resolution = "${var.acceptor_allow_remote_vpc_dns_resolution}"
   }
 
   requester {
-    allow_remote_vpc_dns_resolution = true
+    allow_remote_vpc_dns_resolution = "${var.requestor_allow_remote_vpc_dns_resolution}"
   }
 
   tags = "${module.label.tags}"
