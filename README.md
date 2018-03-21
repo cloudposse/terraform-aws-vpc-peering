@@ -41,6 +41,12 @@ module "vpc_peering" {
 | `accept_status`                 | The status of the VPC peering connection request  |
 
 
+## Credits
+
+Thanks to [Gladly.com](https://www.gladly.com/) for the inspiration with this wonderful module:
+
+https://github.com/sagansystems/terraform-aws-vpc-peering
+
 
 ## Help
 
@@ -111,11 +117,6 @@ or [hire us][hire] to help build your next cloud platform.
   [website]: https://cloudposse.com/
   [community]: https://github.com/cloudposse/
   [hire]: https://cloudposse.com/contact/
-
-
-## References
-
-* Thanks https://github.com/sagansystems/terraform-aws-vpc-peering for inspiration
 
 
 ## Contributors
