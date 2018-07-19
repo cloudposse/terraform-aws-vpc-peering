@@ -61,7 +61,7 @@ references:
 
 screenshots:
   - name: "vpc-peering"
-    description: "Vpc peering"
+    description: "VPC Peering Connection in the AWS Web Console"
     url: "images/vpc-peering.png"
 
 include:

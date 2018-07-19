@@ -26,7 +26,7 @@ It's 100% Open Source and licensed under the [APACHE2](LICENSE).
 
 
 ![vpc-peering](images/vpc-peering.png)
-*Vpc peering*
+*VPC Peering Connection in the AWS Web Console*
 
 
 
