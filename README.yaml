@@ -1,0 +1,76 @@
+---
+#
+# This is the canonical configuration for the `README.md`
+# Run `make readme` to rebuild the `README.md`
+#
+
+# Name of this project
+name: terraform-aws-vpc-peering
+
+# Logo for this project
+#logo: docs/logo.png
+
+# License of this project
+license: "APACHE2"
+
+# Canonical GitHub repo
+github_repo: cloudposse/terraform-aws-vpc-peering
+
+# Badges to display
+badges:
+  - name: "Build Status"
+    image: "https://travis-ci.org/cloudposse/terraform-aws-vpc-peering.svg?branch=master"
+    url: "https://travis-ci.org/cloudposse/terraform-aws-vpc-peering"
+  - name: "Latest Release"
+    image: "https://img.shields.io/github/release/cloudposse/terraform-aws-vpc-peering.svg"
+    url: "https://github.com/cloudposse/terraform-aws-vpc-peering/releases/latest"
+  - name: "Slack Community"
+    image: "https://slack.cloudposse.com/badge.svg"
+    url: "https://slack.cloudposse.com"
+
+related:
+  - name: "terraform-aws-vpc"
+    description: "Terraform Module that defines a VPC with public/private subnets across multiple AZs with Internet Gateways"
+    url: "https://github.com/cloudposse/terraform-aws-vpc"
+  - name: "terraform-aws-kops-vpc-peering"
+    description: "Terraform module to create a peering connection between two VPCs"
+    url: "https://github.com/cloudposse/terraform-aws-kops-vpc-peering"
+
+
+# Short description of this project
+description: |-
+  Terraform module to create a peering connection between two VPCs
+
+# How to use this project
+usage: |-
+  ```hcl
+  module "vpc_peering" {
+    source           = "git::https://github.com/cloudposse/terraform-aws-vpc-peering.git?ref=master"
+    namespace        = "cp"
+    stage            = "dev"
+    name             = "cluster"
+    requestor_vpc_id = "vpc-XXXXXXXX"
+    acceptor_vpc_id  = "vpc-YYYYYYYY"
+  }
+  ```
+
+references:
+  - name: "terraform-aws-vpc-kops-peering"
+    description: "Thanks to [Gladly.com](https://www.gladly.com/) for the inspiration with this wonderful module"
+    url: "https://github.com/sagansystems/terraform-aws-vpc-kops-peering"
+
+screenshots:
+  - name: "vpc-peering"
+    description: "VPC Peering Connection in the AWS Web Console"
+    url: "images/vpc-peering.png"
+
+include:
+  - "docs/targets.md"
+  - "docs/terraform.md"
+
+# Contributors to this project
+contributors:
+  - name: "Andriy Knysh"
+    github: "aknysh"
+  - name: "Vladimir"
+    github: "SweetOps"

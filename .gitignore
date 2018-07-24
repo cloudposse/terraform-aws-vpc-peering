@@ -7,3 +7,6 @@
 .terraform/
 .idea
 terraform-aws-vpc-peering.iml
+
+.build-harness
+build-harness
