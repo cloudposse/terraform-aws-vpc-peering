@@ -7,6 +7,18 @@
 # Name of this project
 name: terraform-aws-vpc-peering
 
+# Tags of this project
+tags:
+  - aws
+  - terraform
+  - networking
+  - vpc
+  - peering
+
+# Categories of this project
+categories:
+  - terraform-networking
+
 # Logo for this project
 #logo: docs/logo.png
 
