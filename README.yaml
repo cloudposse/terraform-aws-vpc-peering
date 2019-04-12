@@ -85,7 +85,7 @@ usage: |-
     stage              = "dev"
     name               = "cluster"
     requestor_vpc_tags = {
-      Name = "kops-vpc"
+      "kubernetes.io/cluster/my-k8s" = "owned"
     }
     acceptor_vpc_tags  = {
       Name = "legacy-vpc"
