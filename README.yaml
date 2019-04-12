@@ -58,7 +58,7 @@ description: |-
 
 # How to use this project
 usage: |-
-  ### Based on VPC id
+  ### Using VPC IDs
 
   ```hcl
   module "vpc_peering" {
@@ -71,7 +71,7 @@ usage: |-
   }
   ```
 
-  ### Based on VPC tags
+  ### Using VPC tags
 
   ```hcl
   module "vpc_peering" {

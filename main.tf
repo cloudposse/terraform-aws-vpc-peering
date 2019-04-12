@@ -11,8 +11,8 @@ module "label" {
 
 resource "aws_vpc_peering_connection" "default" {
   count       = "${var.enabled == "true" ? 1 : 0}"
-  vpc_id      = "${data.aws_vpc.requestor.id}"
-  peer_vpc_id = "${data.aws_vpc.acceptor.id}"
+  vpc_id      = "${join("", data.aws_vpc.requestor.*.id)}"
+  peer_vpc_id = "${join("", data.aws_vpc.acceptor.*.id)}"
 
   auto_accept = "${var.auto_accept}"
 
