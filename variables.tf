@@ -6,11 +6,25 @@ variable "enabled" {
 variable "requestor_vpc_id" {
   type        = "string"
   description = "Requestor VPC ID"
+  default     = ""
+}
+
+variable "requestor_vpc_tags" {
+  type        = "map"
+  description = "Requestor VPC tags"
+  default     = {}
 }
 
 variable "acceptor_vpc_id" {
   type        = "string"
   description = "Acceptor VPC ID"
+  default     = ""
+}
+
+variable "acceptor_vpc_tags" {
+  type        = "map"
+  description = "Acceptor VPC tags"
+  default     = {}
 }
 
 variable "auto_accept" {

@@ -48,6 +48,8 @@ We literally have [*hundreds of terraform modules*][terraform_modules] that are 
 
 ## Usage
 
+### Based on VPC id
+
 ```hcl
 module "vpc_peering" {
   source           = "git::https://github.com/cloudposse/terraform-aws-vpc-peering.git?ref=master"
@@ -56,6 +58,23 @@ module "vpc_peering" {
   name             = "cluster"
   requestor_vpc_id = "vpc-XXXXXXXX"
   acceptor_vpc_id  = "vpc-YYYYYYYY"
+}
+```
+
+### Based on VPC tags
+
+```hcl
+module "vpc_peering" {
+  source             = "git::https://github.com/cloudposse/terraform-aws-vpc-peering.git?ref=master"
+  namespace          = "cp"
+  stage              = "dev"
+  name               = "cluster"
+  requestor_vpc_tags = {
+    Name = "kops-vpc"
+  }
+  acceptor_vpc_tags  = {
+    Name = "legacy-vpc"
+  }
 }
 ```
 
@@ -74,13 +93,13 @@ Available targets:
   lint                                Lint terraform code
 
 ```
-
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | acceptor_allow_remote_vpc_dns_resolution | Allow acceptor VPC to resolve public DNS hostnames to private IP addresses when queried from instances in the requestor VPC | string | `true` | no |
-| acceptor_vpc_id | Acceptor VPC ID | string | - | yes |
+| acceptor_vpc_id | Acceptor VPC ID | string | `` | no |
+| acceptor_vpc_tags | Acceptor VPC tags | map | `<map>` | no |
 | attributes | Additional attributes (e.g. `policy` or `role`) | list | `<list>` | no |
 | auto_accept | Automatically accept the peering (both VPCs need to be in the same AWS account) | string | `true` | no |
 | delimiter | Delimiter to be used between `namespace`, `stage`, `name`, and `attributes` | string | `-` | no |
@@ -88,7 +107,8 @@ Available targets:
 | name | Name  (e.g. `app` or `cluster`) | string | - | yes |
 | namespace | Namespace (e.g. `cp` or `cloudposse`) | string | - | yes |
 | requestor_allow_remote_vpc_dns_resolution | Allow requestor VPC to resolve public DNS hostnames to private IP addresses when queried from instances in the acceptor VPC | string | `true` | no |
-| requestor_vpc_id | Requestor VPC ID | string | - | yes |
+| requestor_vpc_id | Requestor VPC ID | string | `` | no |
+| requestor_vpc_tags | Requestor VPC tags | map | `<map>` | no |
 | stage | Stage (e.g. `prod`, `dev`, `staging`) | string | - | yes |
 | tags | Additional tags (e.g. map('BusinessUnit`,`XYZ`) | map | `<map>` | no |
 
@@ -188,7 +208,7 @@ In general, PRs are welcome. We follow the typical "fork-and-pull" Git workflow.
 
 ## Copyright
 
-Copyright © 2017-2018 [Cloud Posse, LLC](https://cpco.io/copyright)
+Copyright © 2017-2019 [Cloud Posse, LLC](https://cpco.io/copyright)
 
 
 

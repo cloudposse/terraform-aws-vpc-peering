@@ -58,6 +58,8 @@ description: |-
 
 # How to use this project
 usage: |-
+  ### Based on VPC id
+
   ```hcl
   module "vpc_peering" {
     source           = "git::https://github.com/cloudposse/terraform-aws-vpc-peering.git?ref=master"
@@ -68,6 +70,24 @@ usage: |-
     acceptor_vpc_id  = "vpc-YYYYYYYY"
   }
   ```
+
+  ### Based on VPC tags
+
+  ```hcl
+  module "vpc_peering" {
+    source             = "git::https://github.com/cloudposse/terraform-aws-vpc-peering.git?ref=master"
+    namespace          = "cp"
+    stage              = "dev"
+    name               = "cluster"
+    requestor_vpc_tags = {
+      Name = "kops-vpc"
+    }
+    acceptor_vpc_tags  = {
+      Name = "legacy-vpc"
+    }
+  }
+  ```
+
 
 references:
   - name: "terraform-aws-vpc-kops-peering"
