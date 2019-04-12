@@ -53,7 +53,7 @@ Do not pin to `master` in your code because there may be breaking changes betwee
 Instead pin to the release tag (e.g. `?ref=tags/x.y.z`) of one of our [latest releases](https://github.com/cloudposse/terraform-aws-vpc-peering/releases).
 
 
-### Based on VPC id
+### Using VPC IDs
 
 ```hcl
 module "vpc_peering" {
@@ -66,7 +66,7 @@ module "vpc_peering" {
 }
 ```
 
-### Based on VPC tags
+### Using VPC tags
 
 ```hcl
 module "vpc_peering" {
