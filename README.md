@@ -48,6 +48,11 @@ We literally have [*hundreds of terraform modules*][terraform_modules] that are 
 
 ## Usage
 
+**IMPORTANT:** Using the `master` branch is just an example.
+Do not pin to `master` in your code because there may be breaking changes between releases.
+Instead pin to the release tag (e.g. `?ref=tags/x.y.z`) of one of our [latest releases](https://github.com/cloudposse/terraform-aws-vpc-peering/releases).
+
+
 ### Based on VPC id
 
 ```hcl
