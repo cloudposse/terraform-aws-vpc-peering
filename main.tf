@@ -37,7 +37,7 @@ data "aws_vpc" "requestor" {
 # Lookup requestor route tables
 data "aws_route_tables" "requestor" {
   count  = var.enabled ? 1 : 0
-  vpc_id = data.aws_vpc.acceptor.0.id
+  vpc_id = data.aws_vpc.requestor.0.id
 }
 
 # Lookup acceptor VPC so that we can reference the CIDR
