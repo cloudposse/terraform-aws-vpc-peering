@@ -33,9 +33,9 @@ github_repo: cloudposse/terraform-aws-vpc-peering
 
 # Badges to display
 badges:
-  - name: "Build Status"
-    image: "https://travis-ci.org/cloudposse/terraform-aws-vpc-peering.svg?branch=master"
-    url: "https://travis-ci.org/cloudposse/terraform-aws-vpc-peering"
+  - name: "Codefresh Build Status"
+    image: "https://g.codefresh.io/api/badges/pipeline/cloudposse/terraform-modules%2Fterraform-aws-vpc-peering?type=cf-1"
+    url: "https://g.codefresh.io/public/accounts/cloudposse/pipelines/5de3232a1fe7e852050b730e"
   - name: "Latest Release"
     image: "https://img.shields.io/github/release/cloudposse/terraform-aws-vpc-peering.svg"
     url: "https://github.com/cloudposse/terraform-aws-vpc-peering/releases/latest"
@@ -58,17 +58,17 @@ description: |-
 
 # How to use this project
 usage: |-
-  **IMPORTANT:** Using the `master` branch is just an example.
-  Do not pin to `master` in your code because there may be breaking changes between releases.
-  Instead pin to the release tag (e.g. `?ref=tags/x.y.z`) of one of our [latest releases](https://github.com/cloudposse/terraform-aws-vpc-peering/releases).
 
+  For a complete example, see [examples/complete](examples/complete).
+
+  For automated tests of the complete example using [bats](https://github.com/bats-core/bats-core) and [Terratest](https://github.com/gruntwork-io/terratest) (which tests and deploys the example on AWS), see [test](test).
 
   ### Using VPC IDs
 
   ```hcl
   module "vpc_peering" {
     source           = "git::https://github.com/cloudposse/terraform-aws-vpc-peering.git?ref=master"
-    namespace        = "cp"
+    namespace        = "eg"
     stage            = "dev"
     name             = "cluster"
     requestor_vpc_id = "vpc-XXXXXXXX"
@@ -81,7 +81,7 @@ usage: |-
   ```hcl
   module "vpc_peering" {
     source             = "git::https://github.com/cloudposse/terraform-aws-vpc-peering.git?ref=master"
-    namespace          = "cp"
+    namespace          = "eg"
     stage              = "dev"
     name               = "cluster"
     requestor_vpc_tags = {
@@ -114,3 +114,7 @@ contributors:
     github: "aknysh"
   - name: "Vladimir"
     github: "SweetOps"
+  - name: "Erik Osterman"
+    github: "osterman"
+  - name: "Igor Rodionov"
+    github: "goruha"
