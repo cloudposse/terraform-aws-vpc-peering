@@ -12,8 +12,6 @@ import (
 func TestExamplesComplete(t *testing.T) {
 	t.Parallel()
 
-	targets := []string{"module.requestor_vpc", "module.requestor_subnets", "module.acceptor_vpc", "module.acceptor_subnets"}
-
 	// We need to create the ALB first because terraform does not wwait for it to be in the ready state before creating ECS target group
 	terraformOptions := &terraform.Options{
 		// The path to where our Terraform code is located
@@ -21,18 +19,20 @@ func TestExamplesComplete(t *testing.T) {
 		Upgrade:      true,
 		// Variables to pass to our Terraform code using -var-file options
 		VarFiles: []string{"fixtures.us-east-2.tfvars"},
-		Targets:  targets,
+		Targets:  []string{"module.requestor_vpc", "module.requestor_subnets", "module.acceptor_vpc", "module.acceptor_subnets"},
 	}
 
 	// At the end of the test, run `terraform destroy` to clean up any resources that were created
 	defer func() {
 		if r := recover(); r != nil {
-			terraformOptions.Targets = targets
+			terraformOptions.Targets = []string{"module.vpc_peering"}
 			terraform.Destroy(t, terraformOptions)
 			terraformOptions.Targets = nil
 			terraform.Destroy(t, terraformOptions)
 			assert.Fail(t, fmt.Sprintf("Panicked: %v", r))
 		} else {
+			terraformOptions.Targets = []string{"module.vpc_peering"}
+			terraform.Destroy(t, terraformOptions)
 			terraformOptions.Targets = nil
 			terraform.Destroy(t, terraformOptions)
 		}
@@ -77,12 +77,12 @@ func TestExamplesComplete(t *testing.T) {
 	assert.Equal(t, []string{"172.32.96.0/19", "172.32.128.0/19"}, acceptorPublicSubnetCidrs)
 
 	// Run `terraform output` to get the value of an output variable
-	connectionId := terraform.OutputList(t, terraformOptions, "connection_id")
+	connectionId := terraform.Output(t, terraformOptions, "connection_id")
 	// Verify we're getting back the outputs we expect
 	assert.Contains(t, connectionId, "pcx-")
 
 	// Run `terraform output` to get the value of an output variable
-	acceptStatus := terraform.OutputList(t, terraformOptions, "accept_status")
+	acceptStatus := terraform.Output(t, terraformOptions, "accept_status")
 	// Verify we're getting back the outputs we expect
 	assert.Equal(t, "active", acceptStatus)
 }
