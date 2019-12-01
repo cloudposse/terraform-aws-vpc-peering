@@ -5,8 +5,8 @@
 
 # Module directory
 .terraform/
-.idea
-terraform-aws-vpc-peering.iml
+*.iml
+.idea/
 
 .build-harness
-build-harness
+build-harness/
