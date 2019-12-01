@@ -14,17 +14,17 @@ output "requestor_private_subnet_cidrs" {
 }
 
 output "acceptor_vpc_cidr" {
-  value       = module.requestor_vpc.vpc_cidr_block
+  value       = module.acceptor_vpc.vpc_cidr_block
   description = "Acceptor VPC ID"
 }
 
 output "acceptor_public_subnet_cidrs" {
-  value       = module.requestor_subnets.public_subnet_cidrs
+  value       = module.acceptor_subnets.public_subnet_cidrs
   description = "Acceptor public subnet CIDRs"
 }
 
 output "acceptor_private_subnet_cidrs" {
-  value       = module.requestor_subnets.private_subnet_cidrs
+  value       = module.acceptor_subnets.private_subnet_cidrs
   description = "Acceptor private subnet CIDRs"
 }
 

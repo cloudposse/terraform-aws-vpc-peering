@@ -75,4 +75,14 @@ func TestExamplesComplete(t *testing.T) {
 	acceptorPublicSubnetCidrs := terraform.OutputList(t, terraformOptions, "acceptor_public_subnet_cidrs")
 	// Verify we're getting back the outputs we expect
 	assert.Equal(t, []string{"172.32.96.0/19", "172.32.128.0/19"}, acceptorPublicSubnetCidrs)
+
+	// Run `terraform output` to get the value of an output variable
+	connectionId := terraform.OutputList(t, terraformOptions, "connection_id")
+	// Verify we're getting back the outputs we expect
+	assert.Contains(t, connectionId, "pcx-")
+
+	// Run `terraform output` to get the value of an output variable
+	acceptStatus := terraform.OutputList(t, terraformOptions, "accept_status")
+	// Verify we're getting back the outputs we expect
+	assert.Equal(t, "active", acceptStatus)
 }
