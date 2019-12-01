@@ -25,6 +25,12 @@ resource "aws_vpc_peering_connection" "default" {
   }
 
   tags = module.label.tags
+
+  timeouts {
+    create = var.create_timeout
+    update = var.update_timeout
+    delete = var.delete_timeout
+  }
 }
 
 # Lookup requestor VPC so that we can reference the CIDR
