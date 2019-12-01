@@ -1,6 +1,7 @@
 package test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
@@ -11,19 +12,39 @@ import (
 func TestExamplesComplete(t *testing.T) {
 	t.Parallel()
 
+	targets := []string{"module.requestor_vpc", "module.requestor_subnets", "module.acceptor_vpc", "module.acceptor_subnets"}
+
+	// We need to create the ALB first because terraform does not wwait for it to be in the ready state before creating ECS target group
 	terraformOptions := &terraform.Options{
 		// The path to where our Terraform code is located
 		TerraformDir: "../../examples/complete",
 		Upgrade:      true,
 		// Variables to pass to our Terraform code using -var-file options
 		VarFiles: []string{"fixtures.us-east-2.tfvars"},
+		Targets:  targets,
 	}
 
 	// At the end of the test, run `terraform destroy` to clean up any resources that were created
-	defer terraform.Destroy(t, terraformOptions)
+	defer func() {
+		if r := recover(); r != nil {
+			terraformOptions.Targets = targets
+			terraform.Destroy(t, terraformOptions)
+			terraformOptions.Targets = nil
+			terraform.Destroy(t, terraformOptions)
+			assert.Fail(t, fmt.Sprintf("Panicked: %v", r))
+		} else {
+			terraformOptions.Targets = nil
+			terraform.Destroy(t, terraformOptions)
+		}
+	}()
 
 	// This will run `terraform init` and `terraform apply` and fail the test if there are any errors
 	terraform.InitAndApply(t, terraformOptions)
+
+	terraformOptions.Targets = nil
+
+	// This will run `terraform init` and `terraform apply` and fail the test if there are any errors
+	terraform.Apply(t, terraformOptions)
 
 	// Run `terraform output` to get the value of an output variable
 	requestorVpcCidr := terraform.Output(t, terraformOptions, "requestor_vpc_cidr")
