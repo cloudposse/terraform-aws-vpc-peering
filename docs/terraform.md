@@ -1,9 +1,10 @@
+<!-- markdownlint-disable -->
 ## Requirements
 
 | Name | Version |
 |------|---------|
 | terraform | >= 0.12.0, < 0.14.0 |
-| aws | ~> 2.0 |
+| aws | >= 2.0, < 4.0.0 |
 | local | ~> 1.3 |
 | template | ~> 2.0 |
 
@@ -11,7 +12,7 @@
 
 | Name | Version |
 |------|---------|
-| aws | ~> 2.0 |
+| aws | >= 2.0, < 4.0.0 |
 
 ## Inputs
 
@@ -42,3 +43,4 @@
 | accept\_status | The status of the VPC peering connection request |
 | connection\_id | VPC peering connection ID |
 
+<!-- markdownlint-restore -->
