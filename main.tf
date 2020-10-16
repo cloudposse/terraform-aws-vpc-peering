@@ -50,11 +50,13 @@ data "aws_vpc" "acceptor" {
 data "aws_route_tables" "requestor" {
   count  = var.enabled ? 1 : 0
   vpc_id = join("", data.aws_vpc.requestor.*.id)
+  tags   = var.requestor_route_table_tags
 }
 
 data "aws_route_tables" "acceptor" {
   count  = var.enabled ? 1 : 0
   vpc_id = join("", data.aws_vpc.acceptor.*.id)
+  tags   = var.acceptor_route_table_tags
 }
 
 # Create routes from requestor to acceptor
