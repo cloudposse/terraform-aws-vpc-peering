@@ -10,6 +10,12 @@ variable "requestor_vpc_tags" {
   default     = {}
 }
 
+variable "requestor_route_table_filters" {
+  type        = list(any)
+  description = "Only add peer routes to requestor VPC route tables matching these filters"
+  default     = []
+}
+
 variable "requestor_route_table_tags" {
   type        = map(string)
   description = "Only add peer routes to requestor VPC route tables matching these tags"
@@ -26,6 +32,12 @@ variable "acceptor_vpc_tags" {
   type        = map(string)
   description = "Acceptor VPC tags"
   default     = {}
+}
+
+variable "acceptor_route_table_filters" {
+  type        = list(any)
+  description = "Only add peer routes to acceptor VPC route tables matching these filters"
+  default     = []
 }
 
 variable "acceptor_route_table_tags" {

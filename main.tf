@@ -40,12 +40,28 @@ data "aws_route_tables" "requestor" {
   count  = module.this.enabled ? 1 : 0
   vpc_id = join("", data.aws_vpc.requestor.*.id)
   tags   = var.requestor_route_table_tags
+
+  dynamic "filter" {
+    for_each = var.requestor_route_table_filters
+    content {
+      name   = filter.value["name"]
+      values = filter.value["values"]
+    }
+  }
 }
 
 data "aws_route_tables" "acceptor" {
   count  = module.this.enabled ? 1 : 0
   vpc_id = join("", data.aws_vpc.acceptor.*.id)
   tags   = var.acceptor_route_table_tags
+
+  dynamic "filter" {
+    for_each = var.acceptor_route_table_filters
+    content {
+      name   = filter.value["name"]
+      values = filter.value["values"]
+    }
+  }
 }
 
 # Create routes from requestor to acceptor
