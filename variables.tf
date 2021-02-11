@@ -16,6 +16,12 @@ variable "requestor_route_table_tags" {
   default     = {}
 }
 
+variable "requestor_routes_create" {
+  type        = bool
+  description = "Whether to add routes for the requestor VPC to the route tables or not"
+  default     = true
+}
+
 variable "acceptor_vpc_id" {
   type        = string
   description = "Acceptor VPC ID"
@@ -32,6 +38,12 @@ variable "acceptor_route_table_tags" {
   type        = map(string)
   description = "Only add peer routes to acceptor VPC route tables matching these tags"
   default     = {}
+}
+
+variable "acceptor_routes_create" {
+  type        = bool
+  description = "Whether to add routes for the acceptor VPC to the route tables or not"
+  default     = true
 }
 
 variable "auto_accept" {
