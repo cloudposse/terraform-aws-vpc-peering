@@ -19,6 +19,7 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | acceptor\_allow\_remote\_vpc\_dns\_resolution | Allow acceptor VPC to resolve public DNS hostnames to private IP addresses when queried from instances in the requestor VPC | `bool` | `true` | no |
+| acceptor\_cidr\_block\_associations | Only add these acceptor VPC CIDR block associations to reqeustor VPC route tables | `list(string)` | `[]` | no |
 | acceptor\_route\_table\_tags | Only add peer routes to acceptor VPC route tables matching these tags | `map(string)` | `{}` | no |
 | acceptor\_vpc\_id | Acceptor VPC ID | `string` | `""` | no |
 | acceptor\_vpc\_tags | Acceptor VPC tags | `map(string)` | `{}` | no |
@@ -39,6 +40,7 @@
 | namespace | Namespace, which could be your organization name or abbreviation, e.g. 'eg' or 'cp' | `string` | `null` | no |
 | regex\_replace\_chars | Regex to replace chars with empty string in `namespace`, `environment`, `stage` and `name`.<br>If not set, `"/[^a-zA-Z0-9-]/"` is used to remove all characters other than hyphens, letters and digits. | `string` | `null` | no |
 | requestor\_allow\_remote\_vpc\_dns\_resolution | Allow requestor VPC to resolve public DNS hostnames to private IP addresses when queried from instances in the acceptor VPC | `bool` | `true` | no |
+| requestor\_cidr\_block\_associations | Only add these requestor VPC CIDR block associations to acceptor VPC route tables | `list(string)` | `[]` | no |
 | requestor\_route\_table\_tags | Only add peer routes to requestor VPC route tables matching these tags | `map(string)` | `{}` | no |
 | requestor\_vpc\_id | Requestor VPC ID | `string` | `""` | no |
 | requestor\_vpc\_tags | Requestor VPC tags | `map(string)` | `{}` | no |

@@ -16,6 +16,12 @@ variable "requestor_route_table_tags" {
   default     = {}
 }
 
+variable "requestor_cidr_block_associations" {
+  type        = list(string)
+  description = "Only add these requestor VPC CIDR block associations to acceptor VPC route tables"
+  default     = []
+}
+
 variable "acceptor_vpc_id" {
   type        = string
   description = "Acceptor VPC ID"
@@ -32,6 +38,12 @@ variable "acceptor_route_table_tags" {
   type        = map(string)
   description = "Only add peer routes to acceptor VPC route tables matching these tags"
   default     = {}
+}
+
+variable "acceptor_cidr_block_associations" {
+  type        = list(string)
+  description = "Only add these acceptor VPC CIDR block associations to reqeustor VPC route tables"
+  default     = []
 }
 
 variable "auto_accept" {
