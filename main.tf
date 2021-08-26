@@ -23,8 +23,8 @@ resource "aws_vpc_peering_connection" "default" {
 }
 
 locals {
-  acceptor_cidr_block_associations  = length(var.acceptor_cidr_block_associations) > 0 ? var.acceptor_cidr_block_associations : [for d in data.aws_vpc.acceptor.0.cidr_block_associations: d.cidr_block]
-  requestor_cidr_block_associations = length(var.requestor_cidr_block_associations) > 0 ? var.requestor_cidr_block_associations : [for d in data.aws_vpc.requestor.0.cidr_block_associations: d.cidr_block]
+  acceptor_cidr_block_associations  = length(var.acceptor_cidr_block_associations) > 0 ? var.acceptor_cidr_block_associations : [for d in data.aws_vpc.acceptor.0.cidr_block_associations : d.cidr_block]
+  requestor_cidr_block_associations = length(var.requestor_cidr_block_associations) > 0 ? var.requestor_cidr_block_associations : [for d in data.aws_vpc.requestor.0.cidr_block_associations : d.cidr_block]
 }
 
 # Lookup requestor VPC so that we can reference the CIDR
