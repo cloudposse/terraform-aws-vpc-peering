@@ -37,7 +37,7 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_acceptor_allow_remote_vpc_dns_resolution"></a> [acceptor\_allow\_remote\_vpc\_dns\_resolution](#input\_acceptor\_allow\_remote\_vpc\_dns\_resolution) | Allow acceptor VPC to resolve public DNS hostnames to private IP addresses when queried from instances in the requestor VPC | `bool` | `true` | no |
-| <a name="input_acceptor_cidr_block_associations"></a> [acceptor\_cidr\_block\_associations](#input\_acceptor\_cidr\_block\_associations) | Only add these acceptor VPC CIDR block associations to reqeustor VPC route tables | `list(string)` | `[]` | no |
+| <a name="input_acceptor_cidr_block_associations"></a> [acceptor\_cidr\_block\_associations](#input\_acceptor\_cidr\_block\_associations) | Only add these acceptor VPC CIDR block associations to requestor VPC route tables | `list(string)` | `[]` | no |
 | <a name="input_acceptor_route_table_tags"></a> [acceptor\_route\_table\_tags](#input\_acceptor\_route\_table\_tags) | Only add peer routes to acceptor VPC route tables matching these tags | `map(string)` | `{}` | no |
 | <a name="input_acceptor_vpc_id"></a> [acceptor\_vpc\_id](#input\_acceptor\_vpc\_id) | Acceptor VPC ID | `string` | `""` | no |
 | <a name="input_acceptor_vpc_tags"></a> [acceptor\_vpc\_tags](#input\_acceptor\_vpc\_tags) | Acceptor VPC tags | `map(string)` | `{}` | no |
