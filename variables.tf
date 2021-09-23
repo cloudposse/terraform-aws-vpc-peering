@@ -42,7 +42,7 @@ variable "acceptor_route_table_tags" {
 
 variable "acceptor_cidr_block_associations" {
   type        = list(string)
-  description = "Only add these acceptor VPC CIDR block associations to reqeustor VPC route tables"
+  description = "Only add these acceptor VPC CIDR block associations to requestor VPC route tables"
   default     = []
 }
 
