@@ -69,3 +69,15 @@ variable "delete_timeout" {
   description = "VPC peering connection delete timeout. For more details, see https://www.terraform.io/docs/configuration/resources.html#operation-timeouts"
   default     = "5m"
 }
+
+variable "requestor_ignore_cidrs" {
+  type        = list(string)
+  description = "A list of CIDR blocks from the requestor VPC to ignore"
+  default     = []
+}
+
+variable "acceptor_ignore_cidrs" {
+  type        = list(string)
+  description = "A list of CIDR blocks from the acceptor VPC to ignore"
+  default     = []
+}
