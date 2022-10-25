@@ -17,3 +17,8 @@ variable "acceptor_vpc_cidr" {
   type        = string
   description = "Acceptor VPC CIDR"
 }
+
+variable "requestor_additional_ipv4_cidr_block" {
+  description = "An additional IPv4 CIDR block to associate with the VPC"
+  type        = string
+}

@@ -52,6 +52,11 @@ func TestExamplesComplete(t *testing.T) {
 	assert.Equal(t, "172.16.0.0/16", requestorVpcCidr)
 
 	// Run `terraform output` to get the value of an output variable
+	requestorVpcAdditionalCidr := terraform.Output(t, terraformOptions, "requestor_vpc_additional_cidr")
+	// Verify we're getting back the outputs we expect
+	assert.Equal(t, "100.64.0.0/16", requestorVpcAdditionalCidr)	
+
+	// Run `terraform output` to get the value of an output variable
 	requestorPrivateSubnetCidrs := terraform.OutputList(t, terraformOptions, "requestor_private_subnet_cidrs")
 	// Verify we're getting back the outputs we expect
 	assert.Equal(t, []string{"172.16.0.0/19", "172.16.32.0/19"}, requestorPrivateSubnetCidrs)
@@ -60,6 +65,11 @@ func TestExamplesComplete(t *testing.T) {
 	requestorPublicSubnetCidrs := terraform.OutputList(t, terraformOptions, "requestor_public_subnet_cidrs")
 	// Verify we're getting back the outputs we expect
 	assert.Equal(t, []string{"172.16.96.0/19", "172.16.128.0/19"}, requestorPublicSubnetCidrs)
+
+	// Run `terraform output` to get the value of an output variable
+	requestorAdditionalSubnetCidrs := terraform.OutputList(t, terraformOptions, "requestor_additional_subnet_cidrs")
+	// Verify we're getting back the outputs we expect
+	assert.Equal(t, []string{"100.64.0.0/19", "100.64.32.0/19"}, requestorAdditionalSubnetCidrs)
 
 	// Run `terraform output` to get the value of an output variable
 	acceptorVpcCidr := terraform.Output(t, terraformOptions, "acceptor_vpc_cidr")
