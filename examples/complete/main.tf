@@ -8,7 +8,7 @@ module "requestor_vpc" {
   attributes              = ["requestor"]
   ipv4_primary_cidr_block = var.requestor_vpc_cidr
   ipv4_additional_cidr_block_associations = {
-    var.requestor_additional_ipv4_cidr_block = {
+    "${var.requestor_additional_ipv4_cidr_block}" = {
       ipv4_cidr_block     = var.requestor_additional_ipv4_cidr_block
       ipv4_ipam_pool_id   = null
       ipv4_netmask_length = null
