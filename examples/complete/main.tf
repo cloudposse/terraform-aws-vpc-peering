@@ -8,9 +8,11 @@ module "requestor_vpc" {
   attributes              = ["requestor"]
   ipv4_primary_cidr_block = var.requestor_vpc_cidr
   ipv4_additional_cidr_block_associations = {
-    ipv4_cidr_block     = var.requestor_additional_ipv4_cidr_block
-    ipv4_ipam_pool_id   = null
-    ipv4_netmask_length = null
+    var.requestor_additional_ipv4_cidr_block = {
+      ipv4_cidr_block     = var.requestor_additional_ipv4_cidr_block
+      ipv4_ipam_pool_id   = null
+      ipv4_netmask_length = null
+    }
   }
 
   context = module.this.context
@@ -37,7 +39,7 @@ module "requestor_subnets_additional" {
   attributes             = ["requestor"]
   vpc_id                 = module.requestor_vpc.vpc_id
   igw_id                 = module.requestor_vpc.igw_id
-  ipv4_cidr_block        = var.requestor_additional_ipv4_cidr_block
+  ipv4_cidr_block        = [var.requestor_additional_ipv4_cidr_block]
   nat_gateway_enabled    = false
   nat_instance_enabled   = false
   public_subnets_enabled = false

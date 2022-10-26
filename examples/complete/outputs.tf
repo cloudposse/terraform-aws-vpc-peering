@@ -4,7 +4,7 @@ output "requestor_vpc_cidr" {
 }
 
 output "requestor_vpc_additional_cidrs" {
-  value       = module.requestor_vpc.vpc_cidr_block_associations
+  value       = module.requestor_vpc.additional_cidr_blocks
   description = "Requestor VPC additional CIDR block associations"
 }
 
