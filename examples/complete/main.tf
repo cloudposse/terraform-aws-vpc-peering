@@ -46,7 +46,7 @@ module "requestor_subnets_additional" {
 
   context = module.this.context
   
-  # nessesary for clean destory, see open issue: https://github.com/hashicorp/terraform-provider-aws/issues/9592
+  # necessary for clean destory, see open issue: https://github.com/hashicorp/terraform-provider-aws/issues/9592
   depends_on = [ module.requestor_vpc ]  
 }
 
