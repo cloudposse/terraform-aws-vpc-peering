@@ -24,8 +24,8 @@ module "requestor_subnets" {
   availability_zones   = var.availability_zones
   attributes           = ["requestor"]
   vpc_id               = module.requestor_vpc.vpc_id
-  igw_id               = module.requestor_vpc.igw_id
-  ipv4_cidr_block      = module.requestor_vpc.vpc_cidr_block
+  igw_id               = [module.requestor_vpc.igw_id]
+  ipv4_cidr_block      = [module.requestor_vpc.vpc_cidr_block]
   nat_gateway_enabled  = false
   nat_instance_enabled = false
 
@@ -38,13 +38,16 @@ module "requestor_subnets_additional" {
   availability_zones     = var.availability_zones
   attributes             = ["requestor"]
   vpc_id                 = module.requestor_vpc.vpc_id
-  igw_id                 = module.requestor_vpc.igw_id
+  igw_id                 = [module.requestor_vpc.igw_id]
   ipv4_cidr_block        = [var.requestor_additional_ipv4_cidr_block]
   nat_gateway_enabled    = false
   nat_instance_enabled   = false
   public_subnets_enabled = false
 
   context = module.this.context
+  
+  # nessesary for clean destory, see open issue: https://github.com/hashicorp/terraform-provider-aws/issues/9592
+  depends_on = [ module.requestor_vpc ]  
 }
 
 module "acceptor_vpc" {
@@ -62,8 +65,8 @@ module "acceptor_subnets" {
   availability_zones   = var.availability_zones
   attributes           = ["acceptor"]
   vpc_id               = module.acceptor_vpc.vpc_id
-  igw_id               = module.acceptor_vpc.igw_id
-  ipv4_cidr_block      = module.requestor_vpc.vpc_cidr_block
+  igw_id               = [module.acceptor_vpc.igw_id]
+  ipv4_cidr_block      = [module.acceptor_vpc.vpc_cidr_block]
   nat_gateway_enabled  = false
   nat_instance_enabled = false
 
