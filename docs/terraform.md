@@ -36,6 +36,7 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_acceptor_allow_remote_vpc_dns_resolution"></a> [acceptor\_allow\_remote\_vpc\_dns\_resolution](#input\_acceptor\_allow\_remote\_vpc\_dns\_resolution) | Allow acceptor VPC to resolve public DNS hostnames to private IP addresses when queried from instances in the requestor VPC | `bool` | `true` | no |
+| <a name="input_acceptor_ignore_cidrs"></a> [acceptor\_ignore\_cidrs](#input\_acceptor\_ignore\_cidrs) | A list of CIDR blocks from the acceptor VPC to ignore | `list(string)` | `[]` | no |
 | <a name="input_acceptor_route_table_tags"></a> [acceptor\_route\_table\_tags](#input\_acceptor\_route\_table\_tags) | Only add peer routes to acceptor VPC route tables matching these tags | `map(string)` | `{}` | no |
 | <a name="input_acceptor_vpc_id"></a> [acceptor\_vpc\_id](#input\_acceptor\_vpc\_id) | Acceptor VPC ID | `string` | `""` | no |
 | <a name="input_acceptor_vpc_tags"></a> [acceptor\_vpc\_tags](#input\_acceptor\_vpc\_tags) | Acceptor VPC tags | `map(string)` | `{}` | no |
@@ -58,6 +59,7 @@
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | ID element. Usually an abbreviation of your organization name, e.g. 'eg' or 'cp', to help ensure generated IDs are globally unique | `string` | `null` | no |
 | <a name="input_regex_replace_chars"></a> [regex\_replace\_chars](#input\_regex\_replace\_chars) | Terraform regular expression (regex) string.<br>Characters matching the regex will be removed from the ID elements.<br>If not set, `"/[^a-zA-Z0-9-]/"` is used to remove all characters other than hyphens, letters and digits. | `string` | `null` | no |
 | <a name="input_requestor_allow_remote_vpc_dns_resolution"></a> [requestor\_allow\_remote\_vpc\_dns\_resolution](#input\_requestor\_allow\_remote\_vpc\_dns\_resolution) | Allow requestor VPC to resolve public DNS hostnames to private IP addresses when queried from instances in the acceptor VPC | `bool` | `true` | no |
+| <a name="input_requestor_ignore_cidrs"></a> [requestor\_ignore\_cidrs](#input\_requestor\_ignore\_cidrs) | A list of CIDR blocks from the requestor VPC to ignore | `list(string)` | `[]` | no |
 | <a name="input_requestor_route_table_tags"></a> [requestor\_route\_table\_tags](#input\_requestor\_route\_table\_tags) | Only add peer routes to requestor VPC route tables matching these tags | `map(string)` | `{}` | no |
 | <a name="input_requestor_vpc_id"></a> [requestor\_vpc\_id](#input\_requestor\_vpc\_id) | Requestor VPC ID | `string` | `""` | no |
 | <a name="input_requestor_vpc_tags"></a> [requestor\_vpc\_tags](#input\_requestor\_vpc\_tags) | Requestor VPC tags | `map(string)` | `{}` | no |
