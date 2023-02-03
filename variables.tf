@@ -37,7 +37,7 @@ variable "acceptor_route_table_tags" {
 variable "auto_accept" {
   type        = bool
   default     = true
-  description = "Automatically accept the peering (both VPCs need to be in the same AWS account)"
+  description = "Automatically accept the peering (both VPCs need to be in the same AWS account and region)"
 }
 
 variable "acceptor_allow_remote_vpc_dns_resolution" {
