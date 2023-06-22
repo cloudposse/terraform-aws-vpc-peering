@@ -2,6 +2,11 @@ provider "aws" {
   region = var.region
 }
 
+provider "aws" {
+  alias = "us-east-1"
+  region = "us-east-2"
+}
+
 module "requestor_vpc" {
   source                  = "cloudposse/vpc/aws"
   version                 = "2.1.0"
@@ -51,6 +56,11 @@ module "requestor_subnets_additional" {
 }
 
 module "acceptor_vpc" {
+
+  providers = {
+    aws = aws.us-east-1
+  }
+
   source                  = "cloudposse/vpc/aws"
   version                 = "2.1.0"
   attributes              = ["acceptor"]
@@ -60,6 +70,11 @@ module "acceptor_vpc" {
 }
 
 module "acceptor_subnets" {
+
+  providers = {
+    aws = aws.us-east-1
+  }
+
   source               = "cloudposse/dynamic-subnets/aws"
   version              = "2.1.0"
   availability_zones   = var.availability_zones
