@@ -4,7 +4,7 @@ provider "aws" {
 
 provider "aws" {
   alias = "us-east-1"
-  region = "us-east-2"
+  region = var.acceptor_region
 }
 
 module "requestor_vpc" {
@@ -77,7 +77,7 @@ module "acceptor_subnets" {
 
   source               = "cloudposse/dynamic-subnets/aws"
   version              = "2.1.0"
-  availability_zones   = var.availability_zones
+  availability_zones   = var.accceptor_availability_zones
   attributes           = ["acceptor"]
   vpc_id               = module.acceptor_vpc.vpc_id
   igw_id               = [module.acceptor_vpc.igw_id]
