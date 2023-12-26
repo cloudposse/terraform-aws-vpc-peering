@@ -4,7 +4,7 @@ provider "aws" {
 
 module "requestor_vpc" {
   source                  = "cloudposse/vpc/aws"
-  version                 = "1.2.0"
+  version                 = "2.1.0"
   attributes              = ["requestor"]
   ipv4_primary_cidr_block = var.requestor_vpc_cidr
   ipv4_additional_cidr_block_associations = {
@@ -20,7 +20,7 @@ module "requestor_vpc" {
 
 module "requestor_subnets" {
   source               = "cloudposse/dynamic-subnets/aws"
-  version              = "2.0.4"
+  version              = "2.3.0"
   availability_zones   = var.availability_zones
   attributes           = ["requestor"]
   vpc_id               = module.requestor_vpc.vpc_id
@@ -34,7 +34,7 @@ module "requestor_subnets" {
 
 module "requestor_subnets_additional" {
   source                 = "cloudposse/dynamic-subnets/aws"
-  version                = "2.0.4"
+  version                = "2.3.0"
   availability_zones     = var.availability_zones
   attributes             = ["requestor"]
   vpc_id                 = module.requestor_vpc.vpc_id
@@ -52,7 +52,7 @@ module "requestor_subnets_additional" {
 
 module "acceptor_vpc" {
   source                  = "cloudposse/vpc/aws"
-  version                 = "1.2.0"
+  version                 = "2.1.0"
   attributes              = ["acceptor"]
   ipv4_primary_cidr_block = var.acceptor_vpc_cidr
 
@@ -61,7 +61,7 @@ module "acceptor_vpc" {
 
 module "acceptor_subnets" {
   source               = "cloudposse/dynamic-subnets/aws"
-  version              = "2.0.4"
+  version              = "2.1.0"
   availability_zones   = var.availability_zones
   attributes           = ["acceptor"]
   vpc_id               = module.acceptor_vpc.vpc_id
