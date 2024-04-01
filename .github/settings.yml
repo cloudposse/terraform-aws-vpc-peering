@@ -1,0 +1,7 @@
+# Upstream changes from _extends are only recognized when modifications are made to this file in the default branch.
+_extends: .github
+repository:
+  name: terraform-aws-vpc-peering
+  description: Terraform module to create a peering connection between two VPCs in the same AWS account.
+  homepage: https://cloudposse.com/accelerate
+  topics: aws, terraform, terraform-module, vpc, peering, vpc-peering, vpn
