@@ -205,7 +205,7 @@ Check out these related projects.
 
 For additional context, refer to some of these links.
 
-- [terraform-aws-vpc-kops-peering](https://github.com/sagansystems/terraform-aws-vpc-kops-peering) - Thanks to [Gladly.com](https://www.gladly.com/) for the inspiration with this wonderful module
+- [terraform-aws-vpc-kops-peering](https://github.com/sagansystems/terraform-aws-vpc-kops-peering) - Thanks to [Gladly.com](https://www.gladly.ai/) for the inspiration with this wonderful module
 
 
 
