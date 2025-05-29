@@ -3,7 +3,7 @@
 <!-- markdownlint-disable -->
 <a href="https://cpco.io/homepage"><img src="https://github.com/cloudposse/terraform-aws-vpc-peering/blob/main/.github/banner.png?raw=true" alt="Project Banner"/></a><br/>
     <p align="right">
-<a href="https://github.com/cloudposse/terraform-aws-vpc-peering/releases/latest"><img src="https://img.shields.io/github/release/cloudposse/terraform-aws-vpc-peering.svg?style=for-the-badge" alt="Latest Release"/></a><a href="https://github.com/cloudposse/terraform-aws-vpc-peering/commits"><img src="https://img.shields.io/github/last-commit/cloudposse/terraform-aws-vpc-peering.svg?style=for-the-badge" alt="Last Updated"/></a><a href="https://slack.cloudposse.com"><img src="https://slack.cloudposse.com/for-the-badge.svg" alt="Slack Community"/></a></p>
+<a href="https://github.com/cloudposse/terraform-aws-vpc-peering/releases/latest"><img src="https://img.shields.io/github/release/cloudposse/terraform-aws-vpc-peering.svg?style=for-the-badge" alt="Latest Release"/></a><a href="https://github.com/cloudposse/terraform-aws-vpc-peering/commits"><img src="https://img.shields.io/github/last-commit/cloudposse/terraform-aws-vpc-peering.svg?style=for-the-badge" alt="Last Updated"/></a><a href="https://cloudposse.com/slack"><img src="https://slack.cloudposse.com/for-the-badge.svg" alt="Slack Community"/></a></p>
 <!-- markdownlint-restore -->
 
 <!--
@@ -50,7 +50,6 @@ Terraform module to create a peering connection between two VPCs
 
 
 ## Usage
-
 
 For a complete example, see [examples/complete](examples/complete).
 
@@ -103,18 +102,6 @@ module "vpc_peering" {
 
 
 
-<!-- markdownlint-disable -->
-## Makefile Targets
-```text
-Available targets:
-
-  help                                Help screen
-  help/all                            Display help for all targets
-  help/short                          This help short screen
-  lint                                Lint terraform code
-
-```
-<!-- markdownlint-restore -->
 <!-- markdownlint-disable -->
 ## Requirements
 
@@ -191,6 +178,11 @@ Available targets:
 | <a name="output_accept_status"></a> [accept\_status](#output\_accept\_status) | The status of the VPC peering connection request |
 | <a name="output_connection_id"></a> [connection\_id](#output\_connection\_id) | VPC peering connection ID |
 <!-- markdownlint-restore -->
+
+
+
+
+
 
 
 ## Related Projects
