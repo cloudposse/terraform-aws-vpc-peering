@@ -44,7 +44,6 @@ data "aws_route_tables" "requestor" {
 }
 
 data "aws_route_tables" "acceptor" {
-  provider = aws.acceptor
   count  = module.this.enabled ? 1 : 0
   vpc_id = join("", data.aws_vpc.acceptor[*].id)
   tags   = var.acceptor_route_table_tags
@@ -70,7 +69,6 @@ resource "aws_route" "requestor" {
 
 # Create routes from acceptor to requestor
 resource "aws_route" "acceptor" {
-  provider                  = aws.acceptor
   count                     = module.this.enabled ? length(distinct(sort(data.aws_route_tables.acceptor[0].ids))) * length(local.requestor_cidr_blocks) : 0
   route_table_id            = element(distinct(sort(data.aws_route_tables.acceptor[0].ids)), ceil(count.index / length(local.requestor_cidr_blocks)))
   destination_cidr_block    = local.requestor_cidr_blocks[count.index % length(local.requestor_cidr_blocks)]
