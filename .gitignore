@@ -10,3 +10,7 @@
 
 .build-harness
 build-harness/
+
+# IDE files
+.vscode
+.history
