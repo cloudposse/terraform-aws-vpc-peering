@@ -3,8 +3,9 @@ resource "aws_vpc_peering_connection" "default" {
   count       = module.this.enabled ? 1 : 0
   vpc_id      = join("", data.aws_vpc.requestor[*].id)
   peer_vpc_id = join("", data.aws_vpc.acceptor[*].id)
-
-  auto_accept = var.auto_accept
+  peer_owner_id = data.aws_caller_identity.requestor.account_id
+  peer_region   = data.aws_region.requestor.name
+  auto_accept   = false
 
   accepter {
     allow_remote_vpc_dns_resolution = var.acceptor_allow_remote_vpc_dns_resolution
@@ -21,6 +22,23 @@ resource "aws_vpc_peering_connection" "default" {
     update = var.update_timeout
     delete = var.delete_timeout
   }
+}
+
+# Accepter's side of the connection.
+resource "aws_vpc_peering_connection_accepter" "default" {
+  provider                  = aws.acceptor
+  vpc_peering_connection_id = aws_vpc_peering_connection.default.id
+  auto_accept               = true
+
+  tags = var.acceptor_vpc_tags
+}
+
+data "aws_region" "requestor" {
+  provider = aws.requestor
+}
+
+data "aws_caller_identity" "requestor" {
+  provider = aws.requestor
 }
 
 # Lookup requestor VPC so that we can reference the CIDR
