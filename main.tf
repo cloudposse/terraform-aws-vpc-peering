@@ -1,4 +1,5 @@
 resource "aws_vpc_peering_connection" "default" {
+  provider    = aws.requestor
   count       = module.this.enabled ? 1 : 0
   vpc_id      = join("", data.aws_vpc.requestor[*].id)
   peer_vpc_id = join("", data.aws_vpc.acceptor[*].id)
@@ -24,6 +25,7 @@ resource "aws_vpc_peering_connection" "default" {
 
 # Lookup requestor VPC so that we can reference the CIDR
 data "aws_vpc" "requestor" {
+  provider = aws.requestor
   count = module.this.enabled ? 1 : 0
   id    = var.requestor_vpc_id
   tags  = var.requestor_vpc_tags
@@ -38,6 +40,7 @@ data "aws_vpc" "acceptor" {
 }
 
 data "aws_route_tables" "requestor" {
+  provider = aws.requestor
   count  = module.this.enabled ? 1 : 0
   vpc_id = join("", data.aws_vpc.requestor[*].id)
   tags   = var.requestor_route_table_tags
@@ -61,6 +64,7 @@ locals {
 
 # Create routes from requestor to acceptor
 resource "aws_route" "requestor" {
+  provider                  = aws.requestor
   count                     = module.this.enabled ? length(distinct(sort(data.aws_route_tables.requestor[0].ids))) * length(local.acceptor_cidr_blocks) : 0
   route_table_id            = element(distinct(sort(data.aws_route_tables.requestor[0].ids)), ceil(count.index / length(local.acceptor_cidr_blocks)))
   destination_cidr_block    = local.acceptor_cidr_blocks[count.index % length(local.acceptor_cidr_blocks)]
