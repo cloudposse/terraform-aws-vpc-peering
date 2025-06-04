@@ -3,8 +3,8 @@ resource "aws_vpc_peering_connection" "default" {
   count       = module.this.enabled ? 1 : 0
   vpc_id      = join("", data.aws_vpc.requestor[*].id)
   peer_vpc_id = join("", data.aws_vpc.acceptor[*].id)
-  peer_owner_id = data.aws_caller_identity.requestor.account_id
-  peer_region   = data.aws_region.requestor.name
+  peer_owner_id = data.aws_caller_identity.requestor[0].account_id
+  peer_region   = data.aws_region.requestor[0].name
   auto_accept   = false
 
   accepter {
@@ -27,17 +27,20 @@ resource "aws_vpc_peering_connection" "default" {
 # Accepter's side of the connection.
 resource "aws_vpc_peering_connection_accepter" "default" {
   provider                  = aws.acceptor
-  vpc_peering_connection_id = aws_vpc_peering_connection.default.id
+  count                     = module.this.enabled ? 1 : 0
+  vpc_peering_connection_id = aws_vpc_peering_connection.default[0].id
   auto_accept               = true
 
   tags = var.acceptor_vpc_tags
 }
 
 data "aws_region" "requestor" {
+  count = module.this.enabled ? 1 : 0
   provider = aws.requestor
 }
 
 data "aws_caller_identity" "requestor" {
+  count = module.this.enabled ? 1 : 0
   provider = aws.requestor
 }
 
