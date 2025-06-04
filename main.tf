@@ -7,10 +7,6 @@ resource "aws_vpc_peering_connection" "default" {
   peer_region   = data.aws_region.acceptor[0].name
   auto_accept   = false
 
-  requester {
-    allow_remote_vpc_dns_resolution = var.requestor_allow_remote_vpc_dns_resolution
-  }
-
   tags = module.this.tags
 
   timeouts {
@@ -20,16 +16,28 @@ resource "aws_vpc_peering_connection" "default" {
   }
 }
 
+# Options must be added after PCX is active
+resource "aws_vpc_peering_connection_options" "default" {
+  provider                  = aws.requestor
+  count                     = module.this.enabled ? 1 : 0
+  vpc_peering_connection_id = aws_vpc_peering_connection.default[0].id
+
+  requester {
+    allow_remote_vpc_dns_resolution = var.requestor_allow_remote_vpc_dns_resolution
+  }
+
+  accepter {
+    allow_remote_vpc_dns_resolution = var.acceptor_allow_remote_vpc_dns_resolution
+  }
+  depends_on = [aws_vpc_peering_connection_accepter.default]
+}
+
 # Accepter's side of the connection.
 resource "aws_vpc_peering_connection_accepter" "default" {
   provider                  = aws.acceptor
   count                     = module.this.enabled ? 1 : 0
   vpc_peering_connection_id = aws_vpc_peering_connection.default[0].id
   auto_accept               = var.auto_accept
-
-  accepter {
-    allow_remote_vpc_dns_resolution = var.acceptor_allow_remote_vpc_dns_resolution
-  }
 
   tags = module.this.tags
 }
