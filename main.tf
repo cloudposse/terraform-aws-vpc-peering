@@ -26,9 +26,6 @@ resource "aws_vpc_peering_connection_options" "default" {
     allow_remote_vpc_dns_resolution = var.requestor_allow_remote_vpc_dns_resolution
   }
 
-  accepter {
-    allow_remote_vpc_dns_resolution = var.acceptor_allow_remote_vpc_dns_resolution
-  }
   depends_on = [aws_vpc_peering_connection_accepter.default]
 }
 
@@ -38,6 +35,10 @@ resource "aws_vpc_peering_connection_accepter" "default" {
   count                     = module.this.enabled ? 1 : 0
   vpc_peering_connection_id = aws_vpc_peering_connection.default[0].id
   auto_accept               = var.auto_accept
+
+  accepter {
+    allow_remote_vpc_dns_resolution = var.acceptor_allow_remote_vpc_dns_resolution
+  }
 
   tags = module.this.tags
 }
