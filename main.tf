@@ -5,7 +5,7 @@ resource "aws_vpc_peering_connection" "default" {
   peer_vpc_id = join("", data.aws_vpc.acceptor[*].id)
   peer_owner_id = data.aws_caller_identity.acceptor[0].account_id
   peer_region   = data.aws_region.acceptor[0].name
-  auto_accept   = false
+  auto_accept   = var.auto_accept
 
   accepter {
     allow_remote_vpc_dns_resolution = var.acceptor_allow_remote_vpc_dns_resolution
@@ -29,7 +29,7 @@ resource "aws_vpc_peering_connection_accepter" "default" {
   provider                  = aws.acceptor
   count                     = module.this.enabled ? 1 : 0
   vpc_peering_connection_id = aws_vpc_peering_connection.default[0].id
-  auto_accept               = true
+  auto_accept               = var.auto_accept
 
   tags = var.acceptor_vpc_tags
 }
