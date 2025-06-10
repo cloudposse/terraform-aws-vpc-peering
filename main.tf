@@ -66,6 +66,15 @@ resource "aws_route" "requestor" {
   depends_on                = [data.aws_route_tables.requestor, aws_vpc_peering_connection.default]
 }
 
+# Create IPv6 routes from requestor to acceptor
+resource "aws_route" "requestor_ipv6" {
+  count                       = module.this.enabled ? length(distinct(sort(data.aws_route_tables.requestor[0].ids))) : 0
+  route_table_id              = element(distinct(sort(data.aws_route_tables.requestor[0].ids)), ceil(count.index))
+  destination_ipv6_cidr_block = data.aws_vpc.acceptor[0].ipv6_cidr_block
+  vpc_peering_connection_id   = join("", aws_vpc_peering_connection.default[*].id)
+  depends_on                  = [data.aws_route_tables.requestor, aws_vpc_peering_connection.default]
+}
+
 # Create routes from acceptor to requestor
 resource "aws_route" "acceptor" {
   count                     = module.this.enabled ? length(distinct(sort(data.aws_route_tables.acceptor[0].ids))) * length(local.requestor_cidr_blocks) : 0
@@ -73,4 +82,13 @@ resource "aws_route" "acceptor" {
   destination_cidr_block    = local.requestor_cidr_blocks[count.index % length(local.requestor_cidr_blocks)]
   vpc_peering_connection_id = join("", aws_vpc_peering_connection.default[*].id)
   depends_on                = [data.aws_route_tables.acceptor, aws_vpc_peering_connection.default]
+}
+
+# Create IPv6 routes from acceptor to requestor
+resource "aws_route" "acceptor_ipv6" {
+  count                       = module.this.enabled ? length(distinct(sort(data.aws_route_tables.acceptor[0].ids))) : 0
+  route_table_id              = element(distinct(sort(data.aws_route_tables.acceptor[0].ids)), ceil(count.index))
+  destination_ipv6_cidr_block = data.aws_vpc.requestor[0].ipv6_cidr_block
+  vpc_peering_connection_id   = join("", aws_vpc_peering_connection.default[*].id)
+  depends_on                  = [data.aws_route_tables.acceptor, aws_vpc_peering_connection.default]
 }
