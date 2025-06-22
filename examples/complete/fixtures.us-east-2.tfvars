@@ -1,6 +1,10 @@
 region = "us-east-2"
 
+acceptor_region = "us-east-1"
+
 availability_zones = ["us-east-2a", "us-east-2b"]
+
+accceptor_availability_zones = ["us-east-1a", "us-east-1b"]
 
 namespace = "eg"
 

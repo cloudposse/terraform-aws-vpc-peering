@@ -3,7 +3,17 @@ variable "region" {
   description = "AWS Region"
 }
 
+variable "acceptor_region" {
+  type        = string
+  description = "AWS Region"
+}
+
 variable "availability_zones" {
+  type        = list(string)
+  description = "List of availability zones"
+}
+
+variable "accceptor_availability_zones" {
   type        = list(string)
   description = "List of availability zones"
 }
