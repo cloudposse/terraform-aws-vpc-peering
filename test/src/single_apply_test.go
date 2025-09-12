@@ -1,0 +1,90 @@
+package test
+
+import (
+	"fmt"
+	"testing"
+
+	"github.com/gruntwork-io/terratest/modules/terraform"
+	"github.com/stretchr/testify/assert"
+)
+
+// Test the Terraform module in examples/single_apply using Terratest.
+func TestSingleApply(t *testing.T) {
+	t.Parallel()
+
+	terraformOptions := &terraform.Options{
+		// The path to where our Terraform code is located
+		TerraformDir: "../../examples/single_apply/",
+		Upgrade:      true,
+		// Variables to pass to our Terraform code using -var-file options
+		VarFiles: []string{"fixtures.us-east-2.tfvars"},
+	}
+
+	// At the end of the test, run `terraform destroy` to clean up any resources that were created
+	defer func() {
+		if r := recover(); r != nil {
+			terraform.Destroy(t, terraformOptions)
+			assert.Fail(t, fmt.Sprintf("Panicked: %v", r))
+		} else {
+			terraform.Destroy(t, terraformOptions)
+		}
+	}()
+
+	// This will run `terraform init` and `terraform apply` and fail the test if there are any errors
+	terraform.InitAndApply(t, terraformOptions)
+
+	terraformOptions.Targets = nil
+
+	// This will run `terraform init` and `terraform apply` and fail the test if there are any errors
+	terraform.Apply(t, terraformOptions)
+
+	// Run `terraform output` to get the value of an output variable
+	requestorVpcCidr := terraform.Output(t, terraformOptions, "requestor_vpc_cidr")
+	// Verify we're getting back the outputs we expect
+	assert.Equal(t, "172.16.0.0/16", requestorVpcCidr)
+
+	// Run `terraform output` to get the value of an output variable
+	requestorVpcAdditionalCidrs := terraform.OutputList(t, terraformOptions, "requestor_vpc_additional_cidrs")
+	// Verify we're getting back the outputs we expect
+	assert.Equal(t, []string{"100.64.0.0/16"}, requestorVpcAdditionalCidrs)
+
+	// Run `terraform output` to get the value of an output variable
+	requestorPrivateSubnetCidrs := terraform.OutputList(t, terraformOptions, "requestor_private_subnet_cidrs")
+	// Verify we're getting back the outputs we expect
+	assert.Equal(t, []string{"172.16.0.0/19", "172.16.32.0/19"}, requestorPrivateSubnetCidrs)
+
+	// Run `terraform output` to get the value of an output variable
+	requestorPublicSubnetCidrs := terraform.OutputList(t, terraformOptions, "requestor_public_subnet_cidrs")
+	// Verify we're getting back the outputs we expect
+	assert.Equal(t, []string{"172.16.96.0/19", "172.16.128.0/19"}, requestorPublicSubnetCidrs)
+
+	// Run `terraform output` to get the value of an output variable
+	requestorAdditionalSubnetCidrs := terraform.OutputList(t, terraformOptions, "requestor_additional_subnet_cidrs")
+	// Verify we're getting back the outputs we expect
+	assert.Equal(t, []string{"100.64.0.0/18", "100.64.64.0/18"}, requestorAdditionalSubnetCidrs)
+
+	// Run `terraform output` to get the value of an output variable
+	acceptorVpcCidr := terraform.Output(t, terraformOptions, "acceptor_vpc_cidr")
+	// Verify we're getting back the outputs we expect
+	assert.Equal(t, "172.32.0.0/16", acceptorVpcCidr)
+
+	// Run `terraform output` to get the value of an output variable
+	acceptorPrivateSubnetCidrs := terraform.OutputList(t, terraformOptions, "acceptor_private_subnet_cidrs")
+	// Verify we're getting back the outputs we expect
+	assert.Equal(t, []string{"172.32.0.0/19", "172.32.32.0/19"}, acceptorPrivateSubnetCidrs)
+
+	// Run `terraform output` to get the value of an output variable
+	acceptorPublicSubnetCidrs := terraform.OutputList(t, terraformOptions, "acceptor_public_subnet_cidrs")
+	// Verify we're getting back the outputs we expect
+	assert.Equal(t, []string{"172.32.96.0/19", "172.32.128.0/19"}, acceptorPublicSubnetCidrs)
+
+	// Run `terraform output` to get the value of an output variable
+	connectionId := terraform.Output(t, terraformOptions, "connection_id")
+	// Verify we're getting back the outputs we expect
+	assert.Contains(t, connectionId, "pcx-")
+
+	// Run `terraform output` to get the value of an output variable
+	acceptStatus := terraform.Output(t, terraformOptions, "accept_status")
+	// Verify we're getting back the outputs we expect
+	assert.Equal(t, "active", acceptStatus)
+}
