@@ -102,7 +102,7 @@ usage: |2-
     stage                                     = "dev"
     name                                      = "cluster"
     acceptor_vpc_id                           = "vpc-xxxxxxxxxxxxxxxxx"
-    requestor_vpc_id                          = "vpc-xxxxxxxxxxxxxxxxx"
+    requestor_vpc_id                          = "vpc-yyyyyyyyyyyyyyyyy"
     acceptor_cidr_blocks                      = ["172.16.0.0/16"]
     requestor_cidr_blocks                     = ["172.17.0.0/16"]
     acceptor_route_table_ids = [
