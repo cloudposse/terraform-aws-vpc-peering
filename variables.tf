@@ -81,3 +81,27 @@ variable "acceptor_ignore_cidrs" {
   description = "A list of CIDR blocks from the acceptor VPC to ignore"
   default     = []
 }
+
+variable "requestor_cidr_blocks" {
+  type        = list(string)
+  description = "Optional list of CIDR blocks from the requestor VPC to use for route creation. If empty, all CIDR blocks associated with the VPC will be used, except those in requestor_ignore_cidrs."
+  default     = []
+}
+
+variable "requestor_route_table_ids" {
+  type        = list(string)
+  description = "Optional list of requestor VPC route table IDs to add routes to. If empty, all route tables matching requestor_route_table_tags will be used."
+  default     = []
+}
+
+variable "acceptor_cidr_blocks" {
+  type        = list(string)
+  description = "Optional list of CIDR blocks from the acceptor VPC to use for route creation. If empty, all CIDR blocks associated with the VPC will be used, except those in acceptor_ignore_cidrs."
+  default     = []
+}
+
+variable "acceptor_route_table_ids" {
+  type        = list(string)
+  description = "Optional list of acceptor VPC route table IDs to add routes to. If empty, all route tables matching acceptor_route_table_tags will be used."
+  default     = []
+}
