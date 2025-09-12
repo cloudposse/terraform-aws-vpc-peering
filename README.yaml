@@ -88,6 +88,36 @@ usage: |2-
     }
   }
   ```
+
+  ### Specifying VPC CIDR blocks and Route Table IDs manually
+
+  Use this approach if you wish to deploy a VPC, Subnets, and a Peering connection without using `-target`.
+
+  ```hcl
+  module "vpc_peering" {
+    source = "cloudposse/vpc-peering/aws"
+    # Cloud Posse recommends pinning every module to a specific version
+    # version = "x.x.x"
+    namespace                                 = "eg"
+    stage                                     = "dev"
+    name                                      = "cluster"
+    acceptor_vpc_id                           = "vpc-xxxxxxxxxxxxxxxxx"
+    requestor_vpc_id                          = "vpc-xxxxxxxxxxxxxxxxx"
+    acceptor_cidr_blocks                      = ["172.16.0.0/16"]
+    requestor_cidr_blocks                     = ["172.17.0.0/16"]
+    acceptor_route_table_ids = [
+      "rtb-xxxxxxxxxxxxxxxxx",
+      "rtb-yyyyyyyyyyyyyyyyy",
+      "rtb-xxxxxxxxxxxxxxxxx"
+    ]
+    requestor_cidr_blocks = [
+      "rtb-aaaaaaaaaaaaaaaaa",
+      "rtb-bbbbbbbbbbbbbbbbb",
+      "rtb-ccccccccccccccccc"
+    ]
+  }
+  ```
+
 references:
   - name: "terraform-aws-vpc-kops-peering"
     description: "Thanks to [Gladly.com](https://www.gladly.com/) for the inspiration with this wonderful module"
